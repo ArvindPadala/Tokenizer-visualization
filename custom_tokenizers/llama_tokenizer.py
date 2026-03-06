@@ -1,16 +1,18 @@
-# custom_tokenizers/gpt2_tokenizer.py
+# custom_tokenizers/llama_tokenizer.py
+# Uses huggyllama/llama-7b — freely available HF tokenizer representing
+# the LLaMA/Mistral/Vicuna family that dominates open-source LLMs in 2024-2026
 from transformers import AutoTokenizer
 import streamlit as st
 
 
 @st.cache_resource(show_spinner=False)
-def _load_gpt2_tokenizer():
-    return AutoTokenizer.from_pretrained("gpt2")
+def _load_llama_tokenizer():
+    return AutoTokenizer.from_pretrained("huggyllama/llama-7b")
 
 
-def tokenize_with_gpt2(text):
+def tokenize_with_llama(text):
     try:
-        tokenizer = _load_gpt2_tokenizer()
+        tokenizer = _load_llama_tokenizer()
         encoding = tokenizer(
             text,
             return_tensors="pt",

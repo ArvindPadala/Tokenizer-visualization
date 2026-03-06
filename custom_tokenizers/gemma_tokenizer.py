@@ -1,16 +1,19 @@
-# custom_tokenizers/gpt2_tokenizer.py
+# custom_tokenizers/gemma_tokenizer.py
+# Uses microsoft/phi-2 — Microsoft's Phi-2 (2023-2024), fully open and ungated on HF.
+# Phi-2 uses a custom BPE tokenizer with a 51k vocabulary, from the efficient small-model family
+# that achieves strong reasoning despite its size (2.7B params).
 from transformers import AutoTokenizer
 import streamlit as st
 
 
 @st.cache_resource(show_spinner=False)
-def _load_gpt2_tokenizer():
-    return AutoTokenizer.from_pretrained("gpt2")
+def _load_gemma_tokenizer():
+    return AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
 
 
-def tokenize_with_gpt2(text):
+def tokenize_with_gemma(text):
     try:
-        tokenizer = _load_gpt2_tokenizer()
+        tokenizer = _load_gemma_tokenizer()
         encoding = tokenizer(
             text,
             return_tensors="pt",
